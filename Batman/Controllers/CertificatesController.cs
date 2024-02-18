@@ -10,22 +10,22 @@ using Batman.Models;
 
 namespace Batman.Controllers
 {
-    public class PeopleController : Controller
+    public class CertificatesController : Controller
     {
         private readonly BatmanContext _context;
 
-        public PeopleController(BatmanContext context)
+        public CertificatesController(BatmanContext context)
         {
             _context = context;
         }
 
-        // GET: People
+        // GET: Certificates
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Person.ToListAsync());
+            return View(await _context.Certificate.ToListAsync());
         }
 
-        // GET: People/Details/5
+        // GET: Certificates/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Batman.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person
+            var certificate = await _context.Certificate
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (person == null)
+            if (certificate == null)
             {
                 return NotFound();
             }
 
-            return View(person);
+            return View(certificate);
         }
 
-        // GET: People/Create
+        // GET: Certificates/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: People/Create
+        // POST: Certificates/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Surname,Age,CertID")] Person person)
+        public async Task<IActionResult> Create([Bind("ID,Description,CertID")] Certificate certificate)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(person);
+                _context.Add(certificate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(person);
+            return View(certificate);
         }
 
-        // GET: People/Edit/5
+        // GET: Certificates/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Batman.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person.FindAsync(id);
-            if (person == null)
+            var certificate = await _context.Certificate.FindAsync(id);
+            if (certificate == null)
             {
                 return NotFound();
             }
-            return View(person);
+            return View(certificate);
         }
 
-        // POST: People/Edit/5
+        // POST: Certificates/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Surname,Age,CertID")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Description,CertID")] Certificate certificate)
         {
-            if (id != person.ID)
+            if (id != certificate.ID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Batman.Controllers
             {
                 try
                 {
-                    _context.Update(person);
+                    _context.Update(certificate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PersonExists(person.ID))
+                    if (!CertificateExists(certificate.ID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Batman.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(person);
+            return View(certificate);
         }
 
-        // GET: People/Delete/5
+        // GET: Certificates/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,34 +124,34 @@ namespace Batman.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person
+            var certificate = await _context.Certificate
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (person == null)
+            if (certificate == null)
             {
                 return NotFound();
             }
 
-            return View(person);
+            return View(certificate);
         }
 
-        // POST: People/Delete/5
+        // POST: Certificates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var person = await _context.Person.FindAsync(id);
-            if (person != null)
+            var certificate = await _context.Certificate.FindAsync(id);
+            if (certificate != null)
             {
-                _context.Person.Remove(person);
+                _context.Certificate.Remove(certificate);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonExists(int id)
+        private bool CertificateExists(int id)
         {
-            return _context.Person.Any(e => e.ID == id);
+            return _context.Certificate.Any(e => e.ID == id);
         }
     }
 }

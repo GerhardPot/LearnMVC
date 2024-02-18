@@ -15,5 +15,6 @@ namespace Batman.Data
         }
 
         public DbSet<Batman.Models.Person> Person { get; set; } = default!;
+        public DbSet<Batman.Models.Certificate> Certificate { get; set; } = default!;
     }
 }

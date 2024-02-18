@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Batman.Migrations
 {
     [DbContext(typeof(BatmanContext))]
-    [Migration("20240217154821_dbcreate")]
-    partial class dbcreate
+    [Migration("20240218092057_UpdatedPeople")]
+    partial class UpdatedPeople
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace Batman.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CertID")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
