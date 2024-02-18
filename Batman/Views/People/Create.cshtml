@@ -28,9 +28,9 @@
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CertID" class="control-label"></label>
-                <input asp-for="CertID" class="form-control" />
-                <span asp-validation-for="CertID" class="text-danger"></span>
+                <label asp-for="CertificateID" class="control-label"></label>
+                <select asp-for="CertificateID" class="form-control" asp-items="@ViewBag.Certificate"></select>
+                <span asp-validation-for="CertificateID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

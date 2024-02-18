@@ -19,9 +19,21 @@ namespace Batman.Controllers
             _context = context;
         }
 
+        public async Task<List<SelectListItem>> GetCertificateList()
+        {
+            var certlist = await _context.Certificate.ToListAsync();
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (var item in certlist)
+            {
+                items.Add(new SelectListItem(item.Description, item.ID.ToString()));
+            }
+            return items;
+        }
+
         // GET: People
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.Person.ToListAsync());
         }
 
@@ -44,8 +56,11 @@ namespace Batman.Controllers
         }
 
         // GET: People/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var certlist = await GetCertificateList();
+            ViewBag.Certificate = certlist;
+            
             return View();
         }
 
@@ -54,7 +69,7 @@ namespace Batman.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Surname,Age,CertID")] Person person)
+        public async Task<IActionResult> Create([Bind("ID,Name,Surname,Age,CertificateID")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -68,6 +83,9 @@ namespace Batman.Controllers
         // GET: People/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            var certlist = await GetCertificateList();
+            ViewBag.Certificate = certlist;
+
             if (id == null)
             {
                 return NotFound();
@@ -86,7 +104,7 @@ namespace Batman.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Surname,Age,CertID")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Surname,Age,CertificateID")] Person person)
         {
             if (id != person.ID)
             {
